@@ -13,7 +13,7 @@ import {
 
 import LinearGradient from "react-native-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
-import env from "../../constants/env";
+import env from "../../config";
 import axios from "axios";
 import colors from "../../constants/colors";
 import Spinner from "react-native-loading-spinner-overlay";
@@ -21,22 +21,28 @@ import { RFValue } from "react-native-responsive-fontsize";
 //Components
 import Header from "../../components/Header";
 import UEPButton from "../../components/UEPButton";
-import ScreenHeader from "../../components/ScreenHeader";
-import { toastr, yupSchema } from "../utilities/index";
-import UEPTextInput from "../../components/UEPTextInput";
-import ContentHeader from "../../components/ContentHeader";
-import InfoHeader from "../../components/InfoHeader";
-import { useFocusEffect } from "@react-navigation/native";
-import { Dropdown } from 'react-native-element-dropdown';
-import fonts from "../../constants/fonts";
-import { store } from "../../store/Store";
-import {
-  encryptData,
-  decryptData
-} from '../../utilities/Crypto';
+// import ScreenHeader from "../../components/ScreenHeader";
+// import { toastr, yupSchema } from "../utilities/index";
+import UEPTextInput from "../../components/UEPInputText";
+// import ContentHeader from "../../components/ContentHeader";
+// import InfoHeader from "../../components/InfoHeader";
+// import { useFocusEffect } from "@react-navigation/native";
+import { Dropdown} from 'react-native-element-dropdown';
+// import fonts from "../../constants/fonts";
+// import { store } from "../../store/Store";
+// import {
+//   encryptData,
+//   decryptData
+// } from '../../utilities/Crypto';
 import Autocomplete from 'react-native-autocomplete-input';
+import store from "../../redux/store";
 
-const CreateAccount = ({ navigation }) => {
+interface Country {
+  id: string;
+  name: string;
+}
+
+const CreateAccount: React.FC<Props> = ({  }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -45,7 +51,7 @@ const CreateAccount = ({ navigation }) => {
   const [zipcode, setZipcode] = useState("");
   const [phone, setPhone] = useState("");
   const [spinner, setSpinner] = useState(false);
-  const [country, setCountry] = useState(231);
+  const [country, setCountry] = React.useState<any>(231);
   const [stateName, setStateName] = useState("");
   const [city, setCity] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
@@ -55,168 +61,168 @@ const CreateAccount = ({ navigation }) => {
   const [citiesList, setCitiesList] = useState([]);
   const [searchquery, setSearchQuery] = useState("");
   const [filteredCitiesList, setFilteredCitiesList] = useState([]);
-  const scrollViewRef = useRef();
+  const scrollViewRef = useRef<ScrollView | null>(null);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      global.guestIndex = 2;
-    }, [])
-  );
+//   useFocusEffect(
+//     React.useCallback(() => {
+//       global.guestIndex = 2;
+//     }, [])
+//   );
 
-  const onTextChange = (text) => {
-    var cleaned = ("" + text).replace(/\D/g, "");
-    var match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
-    if (match) {
-      var intlCode = match[1] ? "+1 " : "",
-        number = [intlCode, "(", match[2], ") ", match[3], "-", match[4]].join(
-          ""
-        );
+//   const onTextChange = (text) => {
+//     var cleaned = ("" + text).replace(/\D/g, "");
+//     var match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
+//     if (match) {
+//       var intlCode = match[1] ? "+1 " : "",
+//         number = [intlCode, "(", match[2], ") ", match[3], "-", match[4]].join(
+//           ""
+//         );
 
-      setPhone(number);
+//       setPhone(number);
 
-      return;
-    }
+//       return;
+//     }
 
-    setPhone(text);
-  };
+//     setPhone(text);
+//   };
 
   //Default Country
-  useEffect(() => {
-    axios
-      .get(env.BASE_URL + "/user/api/getStates?country_id=" + country)
-      .then(async (res) => {
-        res.data = await decryptData(res.data);
-        setStatesList(res.data.data.states);
-      })
-      .catch((err) => {
-      });
-  }, []);
+//   useEffect(() => {
+//     axios
+//       .get(env.BASE_URL + "/user/api/getStates?country_id=" + country)
+//       .then(async (res) => {
+//         res.data = await decryptData(res.data);
+//         setStatesList(res.data.data.states);
+//       })
+//       .catch((err) => {
+//       });
+//   }, []);
 
   //Fetch Countries
-  useEffect(() => {
-    setSpinner(true);
-    axios
-      .get(env.BASE_URL + "/user/api/getCountries")
-      .then(async (res) => {
-        res.data = await decryptData(res.data);
-        setCountriesList(res.data.data.countries);
-      })
-      .catch((err) => {
-      })
-      .finally(() => {
-        setSpinner(false);
-      });
-  }, []);
+//   useEffect(() => {
+//     setSpinner(true);
+//     axios
+//       .get(env.BASE_URL + "/user/api/getCountries")
+//       .then(async (res) => {
+//         res.data = await decryptData(res.data);
+//         setCountriesList(res.data.data.countries);
+//       })
+//       .catch((err) => {
+//       })
+//       .finally(() => {
+//         setSpinner(false);
+//       });
+//   }, []);
 
   //Fetch States
-  const handleState = (value) => {
-    setSpinner(true);
+//   const handleState = (value) => {
+//     setSpinner(true);
 
-    axios
-      .get(env.BASE_URL + "/user/api/getStates?country_id=" + value)
-      .then(async (res) => {
-        res.data = await decryptData(res.data);
-        setStatesList(res.data.data.states);
-      })
-      .catch((err) => {
-      })
-      .finally(() => {
-        setSpinner(false);
-      });
-  };
+//     axios
+//       .get(env.BASE_URL + "/user/api/getStates?country_id=" + value)
+//       .then(async (res) => {
+//         res.data = await decryptData(res.data);
+//         setStatesList(res.data.data.states);
+//       })
+//       .catch((err) => {
+//       })
+//       .finally(() => {
+//         setSpinner(false);
+//       });
+//   };
 
-  const handleCity = (value) => {
-    setSpinner(true);
-    axios
-      .get(env.BASE_URL + "/user/api/getCities?state_id=" + value)
-      .then(async (res) => {
-        res.data = await decryptData(res.data);
-        setCitiesList(res.data.data.cities);
-      })
-      .catch((err) => {
-      })
-      .finally(() => {
-        setSpinner(false);
-      });
-  };
+//   const handleCity = (value) => {
+//     setSpinner(true);
+//     axios
+//       .get(env.BASE_URL + "/user/api/getCities?state_id=" + value)
+//       .then(async (res) => {
+//         res.data = await decryptData(res.data);
+//         setCitiesList(res.data.data.cities);
+//       })
+//       .catch((err) => {
+//       })
+//       .finally(() => {
+//         setSpinner(false);
+//       });
+//   };
 
-  const handleRegister = () => {
-    const cred = {
-      first_name: firstName,
-      last_name: lastName,
-      email_id: email,
-      street_address: street,
-      apartment: (apartment == null || apartment == '') ? "" : apartment,
-      city: searchquery.toString(),
-      state: stateName.toString(),
-      zip_code: zipcode,
-      country: country.toString(),
-      phone_number: phone,
-    };
-    yupSchema
-      .validateUser()
-      .validate(cred)
-      .then(() => {
-        if (cred.country == "") {
-          setTimeout(() => {
-            toastr.warning('Please select country')
-          }, 300);
-          return false;
-        }
-        if (cred.state == "") {
-          setTimeout(() => {
-            toastr.warning('Please select state')
-          }, 300);
-          return false;
-        }
-        if (cred.city == "") {
-          setTimeout(() => {
-            toastr.warning('Please enter city name')
-          }, 300);
-          return false;
-        }
-        setSpinner(true);
-        axios
-          .post(env.BASE_URL + "/user/api/userRegister", encryptData(cred))
-          .then(async (res) => {
-            setSpinner(false);
-            res.data = await decryptData(res.data);
-            setTimeout(() => {
-              toastr.success(store.textData.otp_sent_text);
-            }, 1000);
-            navigation.navigate("VerifyAccount", {
-              email: email,
-            });
-          })
-          .catch((err) => {
-            setSpinner(false);
-            setTimeout(() => {
-              toastr.warning(err.response.data.message);
-            }, 1000)
-          })
-          .finally(() => {
-            setSpinner(false);
-          });
-      })
-      .catch(function (err) {
-        toastr.warning(err.errors[0]);
-      });
-  };
+//   const handleRegister = () => {
+//     const cred = {
+//       first_name: firstName,
+//       last_name: lastName,
+//       email_id: email,
+//       street_address: street,
+//       apartment: (apartment == null || apartment == '') ? "" : apartment,
+//       city: searchquery.toString(),
+//       state: stateName.toString(),
+//       zip_code: zipcode,
+//       country: country.toString(),
+//       phone_number: phone,
+//     };
+//     yupSchema
+//       .validateUser()
+//       .validate(cred)
+//       .then(() => {
+//         if (cred.country == "") {
+//           setTimeout(() => {
+//             toastr.warning('Please select country')
+//           }, 300);
+//           return false;
+//         }
+//         if (cred.state == "") {
+//           setTimeout(() => {
+//             toastr.warning('Please select state')
+//           }, 300);
+//           return false;
+//         }
+//         if (cred.city == "") {
+//           setTimeout(() => {
+//             toastr.warning('Please enter city name')
+//           }, 300);
+//           return false;
+//         }
+//         setSpinner(true);
+//         axios
+//           .post(env.BASE_URL + "/user/api/userRegister", encryptData(cred))
+//           .then(async (res) => {
+//             setSpinner(false);
+//             res.data = await decryptData(res.data);
+//             setTimeout(() => {
+//               toastr.success(store.textData.otp_sent_text);
+//             }, 1000);
+//             navigation.navigate("VerifyAccount", {
+//               email: email,
+//             });
+//           })
+//           .catch((err) => {
+//             setSpinner(false);
+//             setTimeout(() => {
+//               toastr.warning(err.response.data.message);
+//             }, 1000)
+//           })
+//           .finally(() => {
+//             setSpinner(false);
+//           });
+//       })
+//       .catch(function (err) {
+//         toastr.warning(err.errors[0]);
+//       });
+//   };
 
-  const findCity = (query) => {
-    // Method called every time when we change the value of the input
-    if (query) {
-      // Making a case insensitive regular expression
-      const regex = new RegExp(`${query.trim()}`, 'i');
-      // Setting the filtered film array according the query
-      setFilteredCitiesList(
-        citiesList.filter((city) => city.name.search(regex) >= 0)
-      );
-    } else {
-      // If the query is null then return blank
-      setFilteredCitiesList([]);
-    }
-  };
+//   const findCity = (query) => {
+//     // Method called every time when we change the value of the input
+//     if (query) {
+//       // Making a case insensitive regular expression
+//       const regex = new RegExp(`${query.trim()}`, 'i');
+//       // Setting the filtered film array according the query
+//       setFilteredCitiesList(
+//         citiesList.filter((city) => city.name.search(regex) >= 0)
+//       );
+//     } else {
+//       // If the query is null then return blank
+//       setFilteredCitiesList([]);
+//     }
+//   };
 
   return (
     <View style={styles.screen}>
@@ -227,80 +233,80 @@ const CreateAccount = ({ navigation }) => {
         </LinearGradient>
 
         <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : null}
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
           style={{ flex: 1 }}
         >
           <View style={styles.contentView}>
             <ScrollView keyboardShouldPersistTaps='handled' ref={scrollViewRef}>
-              <ScreenHeader text="CREATE AN ACCOUNT" />
+              {/* <ScreenHeader text="CREATE AN ACCOUNT" />
               <ContentHeader text={store.textData.profile_text} />
-              <InfoHeader text={store.textData.profile_description_text} />
+              <InfoHeader text={store.textData.profile_description_text} /> */}
 
               <View style={styles.formView}>
                 {/* First Name */}
                 <UEPTextInput
-                  onChangeText={(e) => {
-                    setFirstName(e);
-                  }}
+                //   onChangeText={(e) => {
+                //     setFirstName(e);
+                //   }}
                   value={firstName}
                   placeholder="First Name"
                   returnKeyType={"next"}
-                  fontFamily={fonts.AvenirNextCondensedRegular}
+                //   fontFamily={fonts.AvenirNextCondensedRegular}
                   fontSize={RFValue(16)}
                 />
                 {/* Last Name  */}
                 <UEPTextInput
-                  onChangeText={(e) => setLastName(e)}
+                //   onChangeText={(e) => setLastName(e)}
                   value={lastName}
                   placeholder="Last Name"
                   returnKeyType={"next"}
-                  fontFamily={fonts.AvenirNextCondensedRegular}
+                //   fontFamily={fonts.AvenirNextCondensedRegular}
                   fontSize={RFValue(16)}
                 />
                 {/* Email  */}
                 <UEPTextInput
-                  onChangeText={(e) => {
-                    setEmail(e);
-                  }}
+                //   onChangeText={(e) => {
+                //     setEmail(e);
+                //   }}
                   value={email}
                   placeholder="Email Address"
                   keyboardType="email-address"
                   autoCapitalize="none"
                   returnKeyType={"next"}
-                  fontFamily={fonts.AvenirNextCondensedRegular}
+                //   fontFamily={fonts.AvenirNextCondensedRegular}
                   fontSize={RFValue(16)}
                 />
                 {/* Street  */}
                 <UEPTextInput
-                  onChangeText={(e) => {
-                    setStreet(e);
-                  }}
+                //   onChangeText={(e) => {
+                //     setStreet(e);
+                //   }}
                   value={street}
                   placeholder="Street Address"
                   returnKeyType={"next"}
-                  fontFamily={fonts.AvenirNextCondensedRegular}
+                //   fontFamily={fonts.AvenirNextCondensedRegular}
                   fontSize={RFValue(16)}
                 />
 
                 {/* Apartment  */}
                 <UEPTextInput
-                  onChangeText={(e) => {
-                    setApartment(e);
-                  }}
+                //   onChangeText={(e) => {
+                //     setApartment(e);
+                //   }}
                   value={apartment}
                   placeholder="Apt # / Suite #"
                   returnKeyType={"next"}
-                  fontFamily={fonts.AvenirNextCondensedRegular}
+                //   fontFamily={fonts.AvenirNextCondensedRegular}
                   fontSize={RFValue(16)}
                 />
 
-                <Dropdown
+                {/* <Dropdown<Country>
                   flatListProps={{
                     bounces: false
                   }}
                   value={country}
                   style={styles.countryView}
-                  fontFamily={fonts.AvenirNextCondensedRegular}
+                //   fontFamily={fonts.AvenirNextCondensedRegular}
                   data={countriesList}
                   labelField="name"
                   valueField="id"
@@ -310,23 +316,23 @@ const CreateAccount = ({ navigation }) => {
                   placeholderStyle={{
                     color: colors.place_holder_color,
                     fontSize: RFValue(16),
-                    fontFamily: fonts.AvenirNextCondensedRegular
+                    // fontFamily: fonts.AvenirNextCondensedRegular
                   }}
                   onFocus={() => Keyboard.dismiss()}
-                  onChange={item => {
-                    setCountry(item.id);
-                    setCity({});
-                    setSearchQuery("");
-                    setStateName("");
-                    setStatesList([]);
-                    setCitiesList([]);
-                    setFilteredCitiesList([]);
-                    handleState(item.id);
-                  }}
+                //   onChange={item => {
+                //     setCountry(item.id);
+                //     setCity({});
+                //     setSearchQuery("");
+                //     setStateName("");
+                //     setStatesList([]);
+                //     setCitiesList([]);
+                //     setFilteredCitiesList([]);
+                //     handleState(item.id);
+                //   }}
                   maxHeight={countriesList.length <= 6 ? 50 * countriesList.length : 300}
                   selectedTextStyle={{
                     color: '#FFF', fontSize: RFValue(16),
-                    fontFamily: fonts.AvenirNextCondensedRegular
+                    // fontFamily: fonts.AvenirNextCondensedRegular
                   }}
                   renderItem={(item) => {
                     return (
@@ -339,23 +345,23 @@ const CreateAccount = ({ navigation }) => {
                         <Text style={{
                           flex: 1,
                           fontSize: RFValue(14),
-                          fontFamily: fonts.AvenirNextCondensedRegular,
+                        //   fontFamily: fonts.AvenirNextCondensedRegular,
                           marginLeft: 10
                         }}>{item.name}</Text>
                       </View>
                     );
                   }}
-                />
+                /> */}
                 {/* End fetch countries  */}
 
                 {/* Start states  */}
-                <Dropdown
+                {/* <Dropdown
                   flatListProps={{
                     bounces: false
                   }}
                   value={stateName}
                   style={styles.countryView}
-                  fontFamily={fonts.AvenirNextCondensedRegular}
+                //   fontFamily={fonts.AvenirNextCondensedRegular}
                   data={statesList}
                   labelField="name"
                   valueField="id"
@@ -364,17 +370,18 @@ const CreateAccount = ({ navigation }) => {
                   dropdownPosition="bottom"
                   placeholderStyle={{
                     color: colors.place_holder_color,
-                    fontSize: RFValue(16), fontFamily: fonts.AvenirNextCondensedRegular
+                    fontSize: RFValue(16), 
+                    // fontFamily: fonts.AvenirNextCondensedRegular
                   }}
-                  onChange={item => {
-                    setStateName(item.id);
-                    setCity({});
-                    setSearchQuery("");
-                    setCitiesList([]);
-                    setFilteredCitiesList([]);
-                    handleCity(item.id);
-                  }}
-                  onFocus={() => Keyboard.dismiss()}
+                //   onChange={item => {
+                //     setStateName(item.id);
+                //     setCity({});
+                //     setSearchQuery("");
+                //     setCitiesList([]);
+                //     setFilteredCitiesList([]);
+                //     handleCity(item.id);
+                //   }}
+                //   onFocus={() => Keyboard.dismiss()}
                   maxHeight={statesList.length <= 5 ? 50 * statesList.length : 250}
                   selectedTextStyle={{
                     color: '#FFF', fontSize: RFValue(16),
@@ -397,7 +404,7 @@ const CreateAccount = ({ navigation }) => {
                       </View>
                     );
                   }}
-                />
+                /> */}
                 {/* End states  */}
                 {/* Start Cities  */}
 
@@ -407,7 +414,7 @@ const CreateAccount = ({ navigation }) => {
                   }}
                   value={city}
                   style={styles.countryView}
-                  fontFamily={fonts.AvenirNextCondensedRegular}
+                //   fontFamily={fonts.AvenirNextCondensedRegular}
                   data={citiesList}
                   labelField="name"
                   valueField="id"
@@ -451,23 +458,23 @@ const CreateAccount = ({ navigation }) => {
                   autoCapitalize="none"
                   autoCorrect={false}
                   data={filteredCitiesList}
-                  defaultValue={JSON.stringify(city) === '{}' ?
-                    '' :
-                    city.name}
-                  onChangeText={(text) => {
-                    setSearchQuery(text);
-                    findCity(text);
-                  }}
+                  // defaultValue={JSON.stringify(city) === '{}' ?
+                  //   '' :
+                  //   city.name}
+                  // onChangeText={(text) => {
+                  //   setSearchQuery(text);
+                  //   findCity(text);
+                  // }}
                   placeholder="City"
-                  onFocus={() => {
-                    setTimeout(() => scrollViewRef.current.scrollToEnd({ duration: 500, animated: true }), 1000);
-                  }}
+                  // onFocus={() => {
+                  //   setTimeout(() => scrollViewRef.current.scrollToEnd({ duration: 500, animated: true }), 1000);
+                  // }}
                   renderTextInput={(props) => <TextInput {...props} placeholderTextColor={colors.place_holder_color}
                     style={{
                       borderBottomColor: colors.header,
                       borderBottomWidth: 2,
                       color: "white",
-                      fontFamily: fonts.AvenirNextCondensedRegular,
+                      // fontFamily: fonts.AvenirNextCondensedRegular,
                       height: Platform.OS === "ios" ? 50 : 50,
                       backgroundColor: '#3f3f3f',
                       fontSize: RFValue(16)
@@ -481,7 +488,7 @@ const CreateAccount = ({ navigation }) => {
                     bounces: false,
                     nestedScrollEnabled: true,
                     keyboardShouldPersistTaps: 'always',
-                    keyExtractor: (_, idx) => idx,
+                    // keyExtractor: (_, idx) => idx,
                     renderItem: ({ item }) => (
                       <TouchableOpacity style={{
                         height: 50,
@@ -489,18 +496,18 @@ const CreateAccount = ({ navigation }) => {
                         flexDirection: 'row',
                         alignItems: 'center',
                       }}
-                        onPress={() => {
-                          setSearchQuery(item.name);
-                          setCity(item);
-                          setFilteredCitiesList([]);
-                        }}
+                        // onPress={() => {
+                        //   setSearchQuery(item.name);
+                        //   setCity(item);
+                        //   setFilteredCitiesList([]);
+                        // }}
                       >
                         <Text style={{
                           flex: 1,
                           fontSize: RFValue(14),
-                          fontFamily: fonts.AvenirNextCondensedRegular,
+                          // fontFamily: fonts.AvenirNextCondensedRegular,
                           marginLeft: 10
-                        }}>{item.name}</Text>
+                        }}>{ name}</Text>
                       </TouchableOpacity>
                     ),
                   }}
@@ -511,22 +518,22 @@ const CreateAccount = ({ navigation }) => {
                 <View style={styles.zipCodeView}>
                   {/* Zip Code  */}
                   <UEPTextInput
-                    onChangeText={(e) => {
-                      setZipcode(e);
-                    }}
+                    // onChangeText={(e) => {
+                    //   setZipcode(e);
+                    // }}
                     value={zipcode}
                     placeholder="Zip Code"
                     keyboardType="number-pad"
                     maxLength={6}
                     returnKeyType={"next"}
-                    fontFamily={fonts.AvenirNextCondensedRegular}
+                    // fontFamily={fonts.AvenirNextCondensedRegular}
                     fontSize={RFValue(16)}
                   />
                 </View>
 
                 {/* Phone  */}
                 <UEPTextInput
-                  onChangeText={(text) => onTextChange(text)}
+                  // onChangeText={(text) => onTextChange(text)}
                   value={phone}
                   placeholder="Telephone"
                   keyboardType="phone-pad"
@@ -534,16 +541,17 @@ const CreateAccount = ({ navigation }) => {
                   dataDetectorTypes="phoneNumber"
                   textContentType="telephoneNumber"
                   maxLength={14}
-                  fontFamily={fonts.AvenirNextCondensedRegular}
+                //   fontFamily={fonts.AvenirNextCondensedRegular}
                   fontSize={RFValue(16)}
                 />
 
                 <UEPButton
-                  title={store.textData.continue_text}
-                  onPressButton={() => {
-                    handleRegister();
-                    Keyboard.dismiss();
-                  }}
+                  // title={store.textData.continue_text}
+                  title={"continue"}
+                //   onPressButton={() => {
+                //     handleRegister();
+                //     Keyboard.dismiss();
+                //   }}
                 />
               </View>
             </ScrollView>
