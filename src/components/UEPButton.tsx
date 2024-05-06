@@ -3,6 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 // import fonts from "../constants/fonts";
 import { RFValue } from "react-native-responsive-fontsize";
 import colors from "../constants/colors";
+import Fonts from "../constants/Fonts";
 
 const UEPButton = (props : any) => {
   return (
@@ -27,7 +28,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     fontSize: RFValue(22),
-    // fontFamily: fonts.BebasNeueRegular,
+    fontFamily: Fonts.BebasNeueRegular,
   },
   buttonView: {
     marginVertical: "4%",

@@ -1,12 +1,17 @@
-import React from 'react'
-import UserLogin from './src/screens/auth/userLogin'
-import ForgotPassword from './src/screens/auth/ForgotPassword'
+import React, { useEffect } from 'react'
+import { Provider } from 'react-redux'
+import store from './src/redux/store'
+import UepNavigator from './src/navigaton/uepNavigator';
+
+
 
 const App = () => {
   return (
-    // <UserLogin/>
-    <ForgotPassword/>
+    <Provider store={store}>
+      <UepNavigator/>
+    </Provider>
   )
 }
-
 export default App
+
+

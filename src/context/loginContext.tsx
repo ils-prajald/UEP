@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-// import { toastr } from "../screens/utilities/index";
+import toastr from '../utilities/toastr';
 // import { store } from "../store/Store";
 
 export interface LoginContextInterface {

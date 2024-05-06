@@ -34,7 +34,7 @@ const Header = (props : any) => {
       <View style={styles.leftMenuView}>
         <TouchableOpacity >
           <Image
-            source={require("../assests/auth/leftMenu.png")}
+            source={require("../assets/auth/leftMenu.png")}
             style={styles.leftMenuImage}
           />
         </TouchableOpacity>
@@ -44,7 +44,7 @@ const Header = (props : any) => {
       <View style={styles.bandView}>
         <View style={styles.headerView}>
           <Image
-            source={require("../assests/UEPcopy.png")}
+            source={require("../assets/UEPcopy.png")}
             style={styles.headerImage}
           />
         </View>
@@ -67,7 +67,7 @@ const Header = (props : any) => {
         <View style={styles.cartView}>
           <Image
             resizeMode="contain"
-            source={require("../assests/auth/cart.png")}
+            source={require("../assets/auth/cart.png")}
             style={styles.cartImage}
           />
         </View>
@@ -103,7 +103,7 @@ const Header = (props : any) => {
         <View style={styles.notificationsView}>
           <Image
             resizeMode="contain"
-            source={require("../assests/auth/notifications.png")}
+            source={require("../assets/auth/notifications.png")}
             style={styles.notificationImage}
           />
         </View>

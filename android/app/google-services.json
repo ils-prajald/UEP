@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "445518009994",
+    "project_id": "uep-viewer-176",
+    "storage_bucket": "uep-viewer-176.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:445518009994:android:5af476c6597aab50a37f73",
+        "android_client_info": {
+          "package_name": "com.uepnewapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "445518009994-dfdli3i92d6qcqh3g3gatjmh4g1j1lae.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEi8AZpIrKZEOcDfoaUXMeWk9z6Efj76E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "445518009994-dfdli3i92d6qcqh3g3gatjmh4g1j1lae.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "445518009994-a52b3aj1g1v08si9mupdvv1inpokepqu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.uep.app"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:445518009994:android:f285a67071b7b544a37f73",
+        "android_client_info": {
+          "package_name": "com.uepviewer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "445518009994-dfdli3i92d6qcqh3g3gatjmh4g1j1lae.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEi8AZpIrKZEOcDfoaUXMeWk9z6Efj76E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "445518009994-dfdli3i92d6qcqh3g3gatjmh4g1j1lae.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "445518009994-a52b3aj1g1v08si9mupdvv1inpokepqu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.uep.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
